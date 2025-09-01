@@ -1,0 +1,32 @@
+name: Bot Test & Pair
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Bot
+        run: node index.js
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          BOT_SECRET: ${{ secrets.BOT_SECRET }}
+          PAIR_URL: ${{ secrets.PAIR_URL }}
